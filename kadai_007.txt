@@ -1,26 +1,18 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import japanize_matplotlib
-import numpy as np
 
 df=pd.read_csv('sample_pandas_6.csv')
 category_df=pd.read_csv('category.csv')
 
 df=pd.merge(df, category_df, how='inner', on='商品番号')
 
-x=np.array([0,1,2,3,4,5])
-y=np.array([len(df.query('カテゴリー=="弁当"')),
-            len(df.query('カテゴリー=="菓子類"')),
-            len(df.query('カテゴリー=="飲料水"')),
-            len(df.query('カテゴリー=="デザート"')),
-            len(df.query('カテゴリー=="雑貨"')),
-            len(df.query('カテゴリー=="図書・新聞"'))])
+aa=df['カテゴリー'].value_counts()
 
-label=('弁当','菓子類','飲料水','デザート','雑貨','図書・新聞')
-plt.bar(x,y,tick_label=label)
-
+aa.plot(kind='bar')
+plt.show()
 
 ####商品番号列の商品番号ごとに、注文数の基本統計量を求める
-dff=df.groupby('商品番号').describe()
+dff=df.groupby('商品番号')['注文数'].describe()
 
 print(dff)
